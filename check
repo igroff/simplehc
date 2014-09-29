@@ -13,7 +13,8 @@ for url in $(cat check.list | egrep -v '^#.*$'); do
   printf "      \"url\":\"${url}\",\n"
   printf "      \"status\":\"${STATUS_CODE}\""
   if [ "${STATUS_CODE}" != "200" ]; then
-    printf ",\n      \"response\":\"put something here encoded\""
+    RESPONSE=$(cat ${TEMP_FILE} | jq --raw-input '@json')
+    printf ",\n      \"response\":${RESPONSE}"
   else
     rm ${TEMP_FILE}
   fi
