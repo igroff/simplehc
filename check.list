@@ -1,0 +1,8 @@
+# This file contains a list of URLs to be checked, for each
+# URL an attempt will be made to contact the result of which
+# will be reflected in the output of the checker
+https://east.glgresearch.com/go/diagnostic
+https://europe.glgresearch.com/go/diagnostic
+https://asia.glgresearch.com/go/diagnostic
+https://west.glgresearch.com/go/diagnostic
+https://services.glgresearch.com/go/diagnostic
