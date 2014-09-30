@@ -4,10 +4,10 @@ DONE_ONE=
 printf "{\n"
 printf "  \"results\":[\n"
 for url in $(cat check.list | egrep -v '^#.*$'); do
-  TEMP_FILE=$(make_temp_file)
-  trap "rm ${TEMP_FILE}" EXIT
-  info "checking ${url}"
-  STATUS_CODE=$(curl -L -s -o /dev/stderr -w "%{http_code}" "$url" 2> "${TEMP_FILE}")
+  TEMP_FILE=$(make_temp_file hcXXXXXXX)
+  trap "[ -r "${TEMP_FILE}" ] && rm ${TEMP_FILE}" EXIT
+  STATUS_CODE=200
+   STATUS_CODE=$(curl -L -s -o /dev/stderr -w "%{http_code}" $url 2> "${TEMP_FILE}")
   [ -n "${DONE_ONE}" ] && printf ",\n"
   printf "    {\n"
   printf "      \"url\":\"${url}\",\n"
@@ -16,7 +16,7 @@ for url in $(cat check.list | egrep -v '^#.*$'); do
     RESPONSE=$(cat ${TEMP_FILE} | jq --raw-input '@json')
     printf ",\n      \"response\":${RESPONSE}"
   else
-    rm ${TEMP_FILE}
+    [ -r "${TEMP_FILE}" ] && rm ${TEMP_FILE}
   fi
   printf "\n    }"
   DONE_ONE=true
